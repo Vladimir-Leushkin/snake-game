@@ -4,16 +4,16 @@ public enum Box {
 
     BOMB,
     CLOSED,
-    BOMBED,
+    NOBOMB,
     FLAGED;
 
     public Object image;
 
-    Box getNextNumberBox(){
+    Box getNextNumberBox() {
         return Box.values()[this.ordinal() + 1];
     }
 
-    public int getNumber(){
+    public int getNumber() {
         return this.ordinal();
     }
 }

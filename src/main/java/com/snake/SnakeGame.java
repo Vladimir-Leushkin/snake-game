@@ -24,10 +24,6 @@ public class SnakeGame extends JFrame implements ActionListener {
     private int turnDelay;
     private Timer timer;
 
-    private Image ball;
-    private Image appleImage;
-    private Image head;
-
     public static void main(String[] args) {
 
         new SnakeGame();
@@ -51,49 +47,18 @@ public class SnakeGame extends JFrame implements ActionListener {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-//                if (!isGameStopped) {
-                    for (Cell cell : allCells) {
-                        g.drawImage((Image) cell.box.image, cell.x * IMAGE_SIZE, cell.y * IMAGE_SIZE, this);
-                    }
-                    for (Cell c : snake.getSnakeParts()) {
-                        g.drawImage((Image) c.box.image, c.x * IMAGE_SIZE, c.y * IMAGE_SIZE, this);
-                    }
-                    g.drawImage((Image) apple.box.image, apple.x * IMAGE_SIZE, apple.y * IMAGE_SIZE, this);
-
-                    Toolkit.getDefaultToolkit().sync();
-
-//                } else {
-//                    gameOver();
-//                }
+                for (Cell cell : allCells) {
+                    g.drawImage((Image) cell.box.image, cell.x * IMAGE_SIZE, cell.y * IMAGE_SIZE, this);
+                }
+                for (Cell c : snake.getSnakeParts()) {
+                    g.drawImage((Image) c.box.image, c.x * IMAGE_SIZE, c.y * IMAGE_SIZE, this);
+                }
+                g.drawImage((Image) apple.box.image, apple.x * IMAGE_SIZE, apple.y * IMAGE_SIZE, this);
+                Toolkit.getDefaultToolkit().sync();
             }
         };
         panel.addKeyListener(new TAdapter());
- //   {
-//            @Override
-//            public void keyPressed(KeyEvent key) {
-//                int e = key.getKeyCode();
-//                switch (e) {
-//                    case KeyEvent.VK_LEFT:
-//                        snake.setDirection(Direction.LEFT);
-//                        break;
-//                    case KeyEvent.VK_RIGHT:
-//                        snake.setDirection(Direction.RIGHT);
-//                        break;
-//                    case KeyEvent.VK_UP:
-//                        snake.setDirection(Direction.UP);
-//                        break;
-//                    case KeyEvent.VK_DOWN:
-//                        snake.setDirection(Direction.DOWN);
-//                        break;
-//                    case KeyEvent.VK_SPACE:
-//                        if (isGameStopped) {
-//                            restart();
-//                        }
-//                }
-//                panel.repaint();
-//            }
-//        });
-        setFocusable(true);
+        panel.setFocusable(true);
         panel.setPreferredSize(new Dimension(WIDTH * IMAGE_SIZE, HEIGHT * IMAGE_SIZE));
         add(panel);
     }
@@ -122,8 +87,8 @@ public class SnakeGame extends JFrame implements ActionListener {
 
     private ArrayList<Cell> getAllCells() {
         allCells = new ArrayList<>();
-        for (int y = 0; y < WIDTH; y++) {
-            allCells.addAll(Arrays.asList(gameField[y]).subList(0, HEIGHT));
+        for (int x = 0; x < WIDTH; x++) {
+            allCells.addAll(Arrays.asList(gameField[x]).subList(0, HEIGHT));
         }
         return allCells;
     }
@@ -131,7 +96,7 @@ public class SnakeGame extends JFrame implements ActionListener {
     private void createGame() {
         for (int y = 0; y < WIDTH; y++) {
             for (int x = 0; x < HEIGHT; x++) {
-                gameField[y][x] = new Cell(x, y, Box.CLOSED);
+                gameField[y][x] = new Cell(y, x, Box.CLOSED);
             }
         }
         turnDelay = 300;
@@ -147,24 +112,17 @@ public class SnakeGame extends JFrame implements ActionListener {
     private void createNewApple() {
         int x = random.nextInt(WIDTH);
         int y = random.nextInt(HEIGHT);
-        Apple a = new Apple(x, y, Box.FLAGED);
-        if (checkCollision(a)) {
+        Apple a = new Apple(x, y);
+        if (snake.checkCollision(a)) {
             createNewApple();
         }
         this.apple = a;
     }
 
-    public boolean checkCollision(Cell gameObject) {
-        for (Cell o : snake.getSnakeParts()) {
-            if (gameObject.x == o.x && gameObject.y == o.y) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     private void gameOver() {
+        for (Cell c : snake.getSnakeParts()) {
+            gameField[c.x][c.y].box = Box.NOBOMB;
+        }
         timer.stop();
         isGameStopped = true;
         label.setText(getMessage("You lose!  Score:" + score));
@@ -188,7 +146,6 @@ public class SnakeGame extends JFrame implements ActionListener {
     private String getMessage(String s) {
         return s;
     }
-
 
 
     @Override

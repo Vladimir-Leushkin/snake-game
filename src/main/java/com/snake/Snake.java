@@ -17,16 +17,6 @@ public class Snake {
         snakeParts.add(new Cell(x + 2, y, Box.BOMB));
     }
 
-//    public void draw(Game game) {
-//        Color color = isAlive ? Color.BLACK : Color.RED;
-//
-//        for (int i = 0; i < snakeParts.size(); i++) {
-//            GameObject part = snakeParts.get(i);
-//            String sign = (i != 0) ? BODY_SIGN : HEAD_SIGN;
-//            game.setCellValueEx(part.x, part.y, Color.NONE, sign, color, 75);
-//        }
-//    }
-
     public void move(Apple apple) {
         Cell snakeHead = createNewHead();
         if (checkCollision(snakeHead) || snakeHead.x > 14
@@ -61,40 +51,31 @@ public class Snake {
 
     public void setDirection(Direction dir) {
 
-        if (this.direction == Direction.LEFT) {
-            if (snakeParts.get(0).x != snakeParts.get(1).x) {
-                this.direction = dir;
+        if (direction == Direction.LEFT) {
+            if (snakeParts.get(0).x != snakeParts.get(1).x && dir != Direction.RIGHT) {
+                direction = dir;
             }
         }
-        if (this.direction == Direction.RIGHT) {
-            if (snakeParts.get(0).x != snakeParts.get(1).x) {
-                this.direction = dir;
+        if (direction == Direction.RIGHT) {
+            if (snakeParts.get(0).x != snakeParts.get(1).x && dir != Direction.LEFT) {
+                direction = dir;
             }
         }
-        if (this.direction == Direction.UP) {
-            if (snakeParts.get(0).y != snakeParts.get(1).y) {
-                this.direction = dir;
+        if (direction == Direction.UP) {
+            if (snakeParts.get(0).y != snakeParts.get(1).y && dir != Direction.DOWN) {
+                direction = dir;
             }
         }
-        if (this.direction == Direction.DOWN) {
-            if (snakeParts.get(0).y != snakeParts.get(1).y) {
-                this.direction = dir;
-            }
-        }
-        if (this.direction == Direction.UP || this.direction == Direction.DOWN) {
-            if (direction != Direction.UP && direction != Direction.DOWN) {
-                this.direction = direction;
-            }
-        } else if (this.direction == Direction.LEFT || this.direction == Direction.RIGHT) {
-            if (direction != Direction.LEFT && direction != Direction.RIGHT) {
-                this.direction = direction;
+        if (direction == Direction.DOWN) {
+            if (snakeParts.get(0).y != snakeParts.get(1).y && dir != Direction.UP) {
+                direction = dir;
             }
         }
     }
 
-    public boolean checkCollision(Cell gameObject) {
+    public boolean checkCollision(Cell cell) {
         for (Cell o : snakeParts) {
-            if (gameObject.x == o.x && gameObject.y == o.y) {
+            if (cell.x == o.x && cell.y == o.y) {
                 return true;
             }
         }
