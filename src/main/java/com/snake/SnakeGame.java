@@ -65,7 +65,7 @@ public class SnakeGame extends JFrame implements ActionListener {
 
     private void initFrame() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Minesweeper");
+        setTitle("Snake");
         setResizable(false);
         setVisible(true);
         pack();
@@ -125,13 +125,13 @@ public class SnakeGame extends JFrame implements ActionListener {
         }
         timer.stop();
         isGameStopped = true;
-        label.setText(getMessage("You lose!  Score:" + score));
+        label.setText(getMessage("You lose!  Score: " + score + ". Пробел - начать заново"));
     }
 
     private void win() {
         timer.stop();
         isGameStopped = true;
-        label.setText(getMessage("You win!!!  Score:" + score));
+        label.setText(getMessage("You win!!!  Score: " + score + ". Пробел - начать заново"));
     }
 
 
