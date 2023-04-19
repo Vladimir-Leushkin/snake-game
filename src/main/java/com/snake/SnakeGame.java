@@ -154,7 +154,7 @@ public class SnakeGame extends JFrame implements ActionListener {
             createNewApple();
             score += 5;
             label.setText(getMessage("Score:" + score));
-            turnDelay -= 10;
+            turnDelay -= 5;
             timer.setDelay(turnDelay);
         }
         if (!snake.isAlive) {
