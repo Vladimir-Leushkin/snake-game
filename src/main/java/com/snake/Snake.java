@@ -75,7 +75,7 @@ public class Snake {
 
     public boolean checkCollision(Cell cell) {
         for (Cell o : snakeParts) {
-            if (cell.x == o.x && cell.y == o.y) {
+            if (o.x == cell.x && o.y == cell.y) {
                 return true;
             }
         }

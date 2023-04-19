@@ -112,11 +112,10 @@ public class SnakeGame extends JFrame implements ActionListener {
     private void createNewApple() {
         int x = random.nextInt(WIDTH);
         int y = random.nextInt(HEIGHT);
-        Apple a = new Apple(x, y);
-        if (snake.checkCollision(a)) {
+        apple = new Apple(x, y);
+        if (snake.checkCollision(apple)) {
             createNewApple();
         }
-        this.apple = a;
     }
 
     private void gameOver() {
